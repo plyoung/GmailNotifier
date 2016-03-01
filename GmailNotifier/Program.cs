@@ -117,7 +117,7 @@ namespace GmailNotifier
 
 		private void OnOpenGmail(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("https://mail.google.com/");
+			System.Diagnostics.Process.Start("http://mail.google.com/");
 		}
 
 		private void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -186,8 +186,12 @@ namespace GmailNotifier
 				if (count > 0) trayIcon.Icon = Icon.FromHandle(Properties.Resources.red_icon.GetHicon());
 				else trayIcon.Icon = Icon.FromHandle(Properties.Resources.black_icon.GetHicon());
 
+				if (count > lastCount)
+				{
+					DoNotification("New message." + Environment.NewLine + count.ToString() + " unread message.");
+				}
+
 				lastCount = count;
-				if (lastCount > 0) DoNotification("New message." + Environment.NewLine + count.ToString() + " unread message.");
 
 				// reset timer when mail count changed
 				timer.Interval = 1;
